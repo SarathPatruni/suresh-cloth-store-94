@@ -39,17 +39,7 @@ const Admin = () => {
   useEffect(() => { if (isAdmin) fetchProducts(); }, [isAdmin]);
 
   if (authLoading) return <div className="min-h-screen flex items-center justify-center text-muted-foreground">Loading…</div>;
-  if (!user) return <Navigate to="/auth" replace />;
-  if (!isAdmin) return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1 container py-24 text-center">
-        <h1 className="font-display text-4xl">Access denied</h1>
-        <p className="text-muted-foreground mt-3">You need admin privileges to view this page.</p>
-      </main>
-      <Footer />
-    </div>
-  );
+  if (!user || !isAdmin) return <Navigate to="/admin/login" replace />;
 
   const openNew = () => { setEditing(null); setForm(empty); setShowForm(true); };
   const openEdit = (p: Product) => {
