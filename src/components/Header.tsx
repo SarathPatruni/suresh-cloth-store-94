@@ -41,7 +41,7 @@ const Header = () => {
               <Link to="/admin"><ShieldCheck className="w-4 h-4 mr-1.5" /> Admin</Link>
             </Button>
           ) : (
-            <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex text-muted-foreground hover:text-foreground">
+            <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex text-muted-foreground hover:text-foreground border">
               <Link to="/admin/login"><ShieldCheck className="w-4 h-4 mr-1.5" /> Admin</Link>
             </Button>
           )}
