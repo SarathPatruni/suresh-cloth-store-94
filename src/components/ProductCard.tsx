@@ -35,18 +35,18 @@ const ProductCard = ({ product }: { product: Product }) => {
       </div>
       <div className="pt-4">
         <h3 className="font-display text-lg leading-tight">{product.name}</h3>
-        <div className="flex items-baseline gap-2 mt-1">
+        <div className="flex items-center gap-2 mt-1.5 flex-wrap">
           {hasDiscount ? (
             <>
-              <span className="inline-flex items-center text-sm font-semibold text-[hsl(142_71%_35%)]">
-                <ArrowDown className="h-3.5 w-3.5" strokeWidth={3} />
+              <span className="text-base font-bold text-foreground">{formatPrice(price)}</span>
+              <span className="text-sm text-muted-foreground line-through">{formatPlain(original!)}</span>
+              <span className="inline-flex items-center text-sm font-bold text-[hsl(142_71%_35%)]">
+                <ArrowDown className="h-4 w-4" strokeWidth={3} />
                 {discountPct}%
               </span>
-              <span className="text-sm text-muted-foreground line-through">{formatPlain(original!)}</span>
-              <span className="text-sm text-foreground font-semibold">{formatPrice(price)}</span>
             </>
           ) : (
-            <span className="text-sm text-foreground font-semibold">{formatPrice(price)}</span>
+            <span className="text-base font-bold text-foreground">{formatPrice(price)}</span>
           )}
         </div>
       </div>
