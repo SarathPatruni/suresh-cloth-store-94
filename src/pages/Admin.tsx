@@ -21,7 +21,12 @@ type Size = Database["public"]["Enums"]["product_size"];
 const SIZES: Size[] = ["S", "M", "L", "XL", "XXL", "XXXL"];
 
 const empty = {
-  name: "", description: "", price: "", category: "men" as Category, image_url: "", in_stock: true, sizes: [] as Size[],
+  name: "", description: "", price: "", original_price: "", category: "men" as Category, image_url: "", in_stock: true, sizes: [] as Size[],
+};
+
+const calcDiscount = (price: number, original?: number | null) => {
+  if (!original || original <= price) return 0;
+  return Math.round(((original - price) / original) * 100);
 };
 
 const Admin = () => {
@@ -49,6 +54,7 @@ const Admin = () => {
     setEditing(p);
     setForm({
       name: p.name, description: p.description ?? "", price: String(p.price),
+      original_price: p.original_price != null ? String(p.original_price) : "",
       category: p.category, image_url: p.image_url ?? "", in_stock: p.in_stock,
       sizes: (p.sizes ?? []) as Size[],
     });
@@ -62,7 +68,9 @@ const Admin = () => {
     e.preventDefault();
     const payload = {
       name: form.name, description: form.description || null,
-      price: Number(form.price), category: form.category,
+      price: Number(form.price),
+      original_price: form.original_price ? Number(form.original_price) : null,
+      category: form.category,
       image_url: form.image_url || null, in_stock: form.in_stock,
       sizes: form.sizes,
     };
@@ -110,8 +118,15 @@ const Admin = () => {
                 <Textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="mt-1.5" rows={2} />
               </div>
               <div>
-                <Label>Price (₹)</Label>
+                <Label>Offer price (₹)</Label>
                 <Input required type="number" min="0" step="0.01" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} className="mt-1.5" />
+              </div>
+              <div>
+                <Label>Original price (₹) <span className="text-muted-foreground text-xs">— optional</span></Label>
+                <Input type="number" min="0" step="0.01" value={form.original_price} onChange={(e) => setForm({ ...form, original_price: e.target.value })} className="mt-1.5" placeholder="MRP before discount" />
+                {form.original_price && form.price && Number(form.original_price) > Number(form.price) && (
+                  <p className="text-xs text-accent mt-1.5">{calcDiscount(Number(form.price), Number(form.original_price))}% off</p>
+                )}
               </div>
               <div>
                 <Label>Category</Label>
@@ -185,7 +200,17 @@ const Admin = () => {
                       <span className="font-medium">{p.name}</span>
                     </td>
                     <td className="p-3 capitalize">{p.category}</td>
-                    <td className="p-3">₹{Number(p.price).toLocaleString("en-IN")}</td>
+                    <td className="p-3">
+                      <div className="flex items-baseline gap-2">
+                        <span className="font-medium">₹{Number(p.price).toLocaleString("en-IN")}</span>
+                        {p.original_price && Number(p.original_price) > Number(p.price) && (
+                          <>
+                            <span className="text-muted-foreground line-through text-xs">₹{Number(p.original_price).toLocaleString("en-IN")}</span>
+                            <span className="text-accent text-xs">{calcDiscount(Number(p.price), Number(p.original_price))}% off</span>
+                          </>
+                        )}
+                      </div>
+                    </td>
                     <td className="p-3 text-xs tracking-wider">{p.sizes?.length ? p.sizes.join(", ") : "—"}</td>
                     <td className="p-3">{p.in_stock ? "Yes" : "No"}</td>
                     <td className="p-3 text-right">

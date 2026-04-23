@@ -23,6 +23,7 @@ export type Database = {
           image_url: string | null
           in_stock: boolean
           name: string
+          original_price: number | null
           price: number
           sizes: Database["public"]["Enums"]["product_size"][]
           updated_at: string
@@ -35,6 +36,7 @@ export type Database = {
           image_url?: string | null
           in_stock?: boolean
           name: string
+          original_price?: number | null
           price: number
           sizes?: Database["public"]["Enums"]["product_size"][]
           updated_at?: string
@@ -47,6 +49,7 @@ export type Database = {
           image_url?: string | null
           in_stock?: boolean
           name?: string
+          original_price?: number | null
           price?: number
           sizes?: Database["public"]["Enums"]["product_size"][]
           updated_at?: string
