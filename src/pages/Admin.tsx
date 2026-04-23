@@ -200,7 +200,17 @@ const Admin = () => {
                       <span className="font-medium">{p.name}</span>
                     </td>
                     <td className="p-3 capitalize">{p.category}</td>
-                    <td className="p-3">₹{Number(p.price).toLocaleString("en-IN")}</td>
+                    <td className="p-3">
+                      <div className="flex items-baseline gap-2">
+                        <span className="font-medium">₹{Number(p.price).toLocaleString("en-IN")}</span>
+                        {p.original_price && Number(p.original_price) > Number(p.price) && (
+                          <>
+                            <span className="text-muted-foreground line-through text-xs">₹{Number(p.original_price).toLocaleString("en-IN")}</span>
+                            <span className="text-accent text-xs">{calcDiscount(Number(p.price), Number(p.original_price))}% off</span>
+                          </>
+                        )}
+                      </div>
+                    </td>
                     <td className="p-3 text-xs tracking-wider">{p.sizes?.length ? p.sizes.join(", ") : "—"}</td>
                     <td className="p-3">{p.in_stock ? "Yes" : "No"}</td>
                     <td className="p-3 text-right">
