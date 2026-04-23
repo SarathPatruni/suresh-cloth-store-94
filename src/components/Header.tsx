@@ -36,9 +36,13 @@ const Header = () => {
         </nav>
 
         <div className="flex items-center gap-2">
-          {isAdmin && (
+          {isAdmin ? (
             <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex">
               <Link to="/admin"><ShieldCheck className="w-4 h-4 mr-1.5" /> Admin</Link>
+            </Button>
+          ) : (
+            <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex text-muted-foreground hover:text-foreground">
+              <Link to="/admin/login"><ShieldCheck className="w-4 h-4 mr-1.5" /> Admin</Link>
             </Button>
           )}
           {user ? (
