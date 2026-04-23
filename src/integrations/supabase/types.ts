@@ -24,6 +24,7 @@ export type Database = {
           in_stock: boolean
           name: string
           price: number
+          sizes: Database["public"]["Enums"]["product_size"][]
           updated_at: string
         }
         Insert: {
@@ -35,6 +36,7 @@ export type Database = {
           in_stock?: boolean
           name: string
           price: number
+          sizes?: Database["public"]["Enums"]["product_size"][]
           updated_at?: string
         }
         Update: {
@@ -46,6 +48,7 @@ export type Database = {
           in_stock?: boolean
           name?: string
           price?: number
+          sizes?: Database["public"]["Enums"]["product_size"][]
           updated_at?: string
         }
         Relationships: []
@@ -87,6 +90,7 @@ export type Database = {
     Enums: {
       app_role: "admin" | "user"
       product_category: "men" | "women" | "kids"
+      product_size: "S" | "M" | "L" | "XL" | "XXL" | "XXXL"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -216,6 +220,7 @@ export const Constants = {
     Enums: {
       app_role: ["admin", "user"],
       product_category: ["men", "women", "kids"],
+      product_size: ["S", "M", "L", "XL", "XXL", "XXXL"],
     },
   },
 } as const
