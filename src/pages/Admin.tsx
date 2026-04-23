@@ -16,9 +16,12 @@ import { Pencil, Plus, Trash2, X } from "lucide-react";
 
 type Product = Tables<"products">;
 type Category = Database["public"]["Enums"]["product_category"];
+type Size = Database["public"]["Enums"]["product_size"];
+
+const SIZES: Size[] = ["S", "M", "L", "XL", "XXL", "XXXL"];
 
 const empty = {
-  name: "", description: "", price: "", category: "men" as Category, image_url: "", in_stock: true,
+  name: "", description: "", price: "", category: "men" as Category, image_url: "", in_stock: true, sizes: [] as Size[],
 };
 
 const Admin = () => {
@@ -47,9 +50,13 @@ const Admin = () => {
     setForm({
       name: p.name, description: p.description ?? "", price: String(p.price),
       category: p.category, image_url: p.image_url ?? "", in_stock: p.in_stock,
+      sizes: (p.sizes ?? []) as Size[],
     });
     setShowForm(true);
   };
+
+  const toggleSize = (s: Size) =>
+    setForm((f) => ({ ...f, sizes: f.sizes.includes(s) ? f.sizes.filter((x) => x !== s) : [...f.sizes, s] }));
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,6 +64,7 @@ const Admin = () => {
       name: form.name, description: form.description || null,
       price: Number(form.price), category: form.category,
       image_url: form.image_url || null, in_stock: form.in_stock,
+      sizes: form.sizes,
     };
     const { error } = editing
       ? await supabase.from("products").update(payload).eq("id", editing.id)
@@ -120,6 +128,28 @@ const Admin = () => {
                 <Label>Image URL</Label>
                 <Input type="url" value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} className="mt-1.5" placeholder="https://…" />
               </div>
+              <div className="md:col-span-2">
+                <Label>Available sizes</Label>
+                <div className="flex flex-wrap gap-2 mt-1.5">
+                  {SIZES.map((s) => {
+                    const active = form.sizes.includes(s);
+                    return (
+                      <button
+                        type="button"
+                        key={s}
+                        onClick={() => toggleSize(s)}
+                        className={`px-3 py-1.5 text-xs uppercase tracking-widest border transition-colors ${
+                          active
+                            ? "bg-foreground text-background border-foreground"
+                            : "bg-background text-foreground border-border hover:border-foreground"
+                        }`}
+                      >
+                        {s}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
               <div className="flex items-center gap-3 md:col-span-2">
                 <Switch checked={form.in_stock} onCheckedChange={(v) => setForm({ ...form, in_stock: v })} />
                 <Label>In stock</Label>
@@ -142,6 +172,7 @@ const Admin = () => {
                   <th className="text-left p-3">Product</th>
                   <th className="text-left p-3">Category</th>
                   <th className="text-left p-3">Price</th>
+                  <th className="text-left p-3">Sizes</th>
                   <th className="text-left p-3">Stock</th>
                   <th className="text-right p-3">Actions</th>
                 </tr>
@@ -155,6 +186,7 @@ const Admin = () => {
                     </td>
                     <td className="p-3 capitalize">{p.category}</td>
                     <td className="p-3">₹{Number(p.price).toLocaleString("en-IN")}</td>
+                    <td className="p-3 text-xs tracking-wider">{p.sizes?.length ? p.sizes.join(", ") : "—"}</td>
                     <td className="p-3">{p.in_stock ? "Yes" : "No"}</td>
                     <td className="p-3 text-right">
                       <Button variant="ghost" size="icon" onClick={() => openEdit(p)}><Pencil className="w-4 h-4" /></Button>
