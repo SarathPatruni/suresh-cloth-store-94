@@ -1,15 +1,29 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect, useState, FormEvent } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useAuth } from "@/hooks/useAuth";
-import { LogOut, ShieldCheck, User as UserIcon } from "lucide-react";
+import { LogOut, Search, ShieldCheck, User as UserIcon } from "lucide-react";
 
 const Header = () => {
   const { user, isAdmin, signOut } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const [query, setQuery] = useState(searchParams.get("q") ?? "");
+
+  useEffect(() => {
+    setQuery(searchParams.get("q") ?? "");
+  }, [searchParams]);
 
   const handleSignOut = async () => {
     await signOut();
     navigate("/");
+  };
+
+  const handleSearch = (e: FormEvent) => {
+    e.preventDefault();
+    const q = query.trim();
+    navigate(q ? `/search?q=${encodeURIComponent(q)}` : "/search");
   };
 
   const navClass = ({ isActive }: { isActive: boolean }) =>
@@ -20,7 +34,7 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/85 backdrop-blur-md">
       <div className="container flex h-20 items-center justify-between gap-4">
-        <Link to="/" className="group">
+        <Link to="/" className="group shrink-0">
           <div className="font-display text-2xl md:text-[1.7rem] leading-none tracking-tight">
             Suresh<span className="text-accent">.</span>
           </div>
@@ -29,13 +43,25 @@ const Header = () => {
           </div>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-8">
           <NavLink to="/shop/men" className={navClass}>Men</NavLink>
           <NavLink to="/shop/women" className={navClass}>Women</NavLink>
           <NavLink to="/shop/kids" className={navClass}>Kids</NavLink>
         </nav>
 
-        <div className="flex items-center gap-2">
+        <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-sm relative">
+          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+          <Input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search products…"
+            aria-label="Search products"
+            className="pl-9 h-10 rounded-full bg-secondary/60 border-transparent focus-visible:bg-background"
+          />
+        </form>
+
+        <div className="flex items-center gap-2 shrink-0">
           {isAdmin ? (
             <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex">
               <Link to="/admin"><ShieldCheck className="w-4 h-4 mr-1.5" /> Admin</Link>
@@ -58,8 +84,21 @@ const Header = () => {
         </div>
       </div>
 
+      {/* Mobile search */}
+      <form onSubmit={handleSearch} className="md:hidden container pb-3 relative">
+        <Search className="w-4 h-4 absolute left-6 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+        <Input
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search products…"
+          aria-label="Search products"
+          className="pl-9 h-10 rounded-full bg-secondary/60 border-transparent"
+        />
+      </form>
+
       {/* Mobile sub-nav */}
-      <nav className="md:hidden flex items-center justify-center gap-6 pb-3 -mt-1">
+      <nav className="lg:hidden flex items-center justify-center gap-6 pb-3">
         <NavLink to="/shop/men" className={navClass}>Men</NavLink>
         <NavLink to="/shop/women" className={navClass}>Women</NavLink>
         <NavLink to="/shop/kids" className={navClass}>Kids</NavLink>
