@@ -211,8 +211,44 @@ const Admin = () => {
                 </Select>
               </div>
               <div className="md:col-span-2">
-                <Label>Image URL</Label>
-                <Input type="url" value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} className="mt-1.5" placeholder="https://…" />
+                <Label>Product image</Label>
+                <div className="mt-1.5 flex flex-col sm:flex-row gap-3 sm:items-start">
+                  <label className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 border border-dashed border-border bg-background cursor-pointer hover:border-foreground transition-colors ${uploading ? "opacity-60 pointer-events-none" : ""}`}>
+                    {uploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+                    <span className="text-xs uppercase tracking-widest">
+                      {uploading ? "Uploading…" : "Upload from device or camera"}
+                    </span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      capture="environment"
+                      className="hidden"
+                      onChange={handleImageUpload}
+                      disabled={uploading}
+                    />
+                  </label>
+                  {form.image_url && (
+                    <div className="relative w-24 h-28 border border-border bg-secondary/40 shrink-0">
+                      <img src={form.image_url} alt="Preview" className="w-full h-full object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => setForm({ ...form, image_url: "" })}
+                        className="absolute -top-2 -right-2 bg-background border border-border rounded-full p-0.5 hover:bg-destructive hover:text-destructive-foreground"
+                        aria-label="Remove image"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </div>
+                  )}
+                </div>
+                <Input
+                  type="url"
+                  value={form.image_url}
+                  onChange={(e) => setForm({ ...form, image_url: e.target.value })}
+                  className="mt-2"
+                  placeholder="…or paste an image URL"
+                />
+                <p className="text-xs text-muted-foreground mt-1.5">JPG, PNG, WEBP or GIF. Max 5MB.</p>
               </div>
               <div className="md:col-span-2">
                 <Label>Available sizes</Label>
