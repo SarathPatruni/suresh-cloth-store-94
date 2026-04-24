@@ -57,6 +57,20 @@ const ProductCard = ({ product }: { product: Product }) => {
             <span className="text-base font-bold text-foreground">{formatPrice(price)}</span>
           )}
         </div>
+        {product.sizes && product.sizes.length > 0 && (
+          <div className="mt-2.5 flex flex-wrap gap-1.5">
+            {product.sizes.map((s) => (
+              <button
+                key={s}
+                type="button"
+                onClick={(e) => handleSizeClick(e, s)}
+                className="min-w-[2rem] h-7 px-2 border border-border text-[0.7rem] uppercase tracking-wider hover:border-foreground hover:bg-foreground hover:text-background transition-elegant"
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </Link>
   );
