@@ -155,6 +155,21 @@ const Admin = () => {
                   </SelectContent>
                 </Select>
               </div>
+              <div>
+                <Label>Subcategory <span className="text-muted-foreground text-xs">— optional</span></Label>
+                <Input
+                  list="subcategory-options"
+                  value={form.subcategory}
+                  onChange={(e) => setForm({ ...form, subcategory: e.target.value })}
+                  className="mt-1.5"
+                  placeholder="e.g. Shirts, T-Shirts, Jeans"
+                />
+                <datalist id="subcategory-options">
+                  {SUBCATEGORIES[form.category]?.map((s) => (
+                    <option key={s} value={s} />
+                  ))}
+                </datalist>
+              </div>
               <div className="md:col-span-2">
                 <Label>Image URL</Label>
                 <Input type="url" value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} className="mt-1.5" placeholder="https://…" />
@@ -242,7 +257,12 @@ const Admin = () => {
                       {p.image_url && <img src={p.image_url} alt="" className="w-10 h-12 object-cover" />}
                       <span className="font-medium">{p.name}</span>
                     </td>
-                    <td className="p-3 capitalize">{p.category}</td>
+                    <td className="p-3 capitalize">
+                      {p.category}
+                      {((p as any).subcategory as string | null) && (
+                        <span className="block text-xs text-muted-foreground normal-case">{(p as any).subcategory}</span>
+                      )}
+                    </td>
                     <td className="p-3">
                       <div className="flex items-baseline gap-2">
                         <span className="font-medium">₹{Number(p.price).toLocaleString("en-IN")}</span>
