@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/hooks/useAuth";
 import Index from "./pages/Index.tsx";
 import Shop from "./pages/Shop.tsx";
+import Product from "./pages/Product.tsx";
 import Search from "./pages/Search.tsx";
 import Auth from "./pages/Auth.tsx";
 import Admin from "./pages/Admin.tsx";
@@ -24,6 +25,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/shop/:category" element={<Shop />} />
+            <Route path="/product/:id" element={<Product />} />
             <Route path="/search" element={<Search />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/admin/login" element={<AdminLogin />} />
