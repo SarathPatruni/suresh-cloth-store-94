@@ -27,7 +27,7 @@ export type Database = {
           original_price: number | null
           price: number
           sizes: Database["public"]["Enums"]["product_size"][]
-          subcategory: string | null
+          subcategory: string
           updated_at: string
         }
         Insert: {
@@ -42,7 +42,7 @@ export type Database = {
           original_price?: number | null
           price: number
           sizes?: Database["public"]["Enums"]["product_size"][]
-          subcategory?: string | null
+          subcategory: string
           updated_at?: string
         }
         Update: {
@@ -57,7 +57,7 @@ export type Database = {
           original_price?: number | null
           price?: number
           sizes?: Database["public"]["Enums"]["product_size"][]
-          subcategory?: string | null
+          subcategory?: string
           updated_at?: string
         }
         Relationships: []
