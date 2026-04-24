@@ -21,7 +21,7 @@ type Size = Database["public"]["Enums"]["product_size"];
 const SIZES: Size[] = ["S", "M", "L", "XL", "XXL", "XXXL"];
 
 const empty = {
-  name: "", description: "", price: "", original_price: "", category: "men" as Category, image_url: "", in_stock: true, sizes: [] as Size[],
+  name: "", description: "", price: "", original_price: "", category: "men" as Category, image_url: "", in_stock: true, sizes: [] as Size[], colors: [] as string[], colorInput: "",
 };
 
 const calcDiscount = (price: number, original?: number | null) => {
@@ -57,12 +57,24 @@ const Admin = () => {
       original_price: p.original_price != null ? String(p.original_price) : "",
       category: p.category, image_url: p.image_url ?? "", in_stock: p.in_stock,
       sizes: (p.sizes ?? []) as Size[],
+      colors: ((p as any).colors ?? []) as string[],
+      colorInput: "",
     });
     setShowForm(true);
   };
 
   const toggleSize = (s: Size) =>
     setForm((f) => ({ ...f, sizes: f.sizes.includes(s) ? f.sizes.filter((x) => x !== s) : [...f.sizes, s] }));
+
+  const addColor = () => {
+    const value = form.colorInput.trim();
+    if (!value) return;
+    setForm((f) => f.colors.some((c) => c.toLowerCase() === value.toLowerCase())
+      ? { ...f, colorInput: "" }
+      : { ...f, colors: [...f.colors, value], colorInput: "" });
+  };
+  const removeColor = (c: string) =>
+    setForm((f) => ({ ...f, colors: f.colors.filter((x) => x !== c) }));
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -73,7 +85,8 @@ const Admin = () => {
       category: form.category,
       image_url: form.image_url || null, in_stock: form.in_stock,
       sizes: form.sizes,
-    };
+      colors: form.colors,
+    } as any;
     const { error } = editing
       ? await supabase.from("products").update(payload).eq("id", editing.id)
       : await supabase.from("products").insert(payload);
@@ -165,6 +178,32 @@ const Admin = () => {
                   })}
                 </div>
               </div>
+              <div className="md:col-span-2">
+                <Label>Available colors</Label>
+                <div className="flex gap-2 mt-1.5">
+                  <Input
+                    value={form.colorInput}
+                    onChange={(e) => setForm({ ...form, colorInput: e.target.value })}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") { e.preventDefault(); addColor(); }
+                    }}
+                    placeholder="e.g. Black, Navy Blue, Olive"
+                  />
+                  <Button type="button" variant="outline" className="rounded-none" onClick={addColor}>Add</Button>
+                </div>
+                {form.colors.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {form.colors.map((c) => (
+                      <span key={c} className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs uppercase tracking-widest border border-border bg-background">
+                        {c}
+                        <button type="button" onClick={() => removeColor(c)} className="text-muted-foreground hover:text-destructive">
+                          <X className="w-3 h-3" />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
               <div className="flex items-center gap-3 md:col-span-2">
                 <Switch checked={form.in_stock} onCheckedChange={(v) => setForm({ ...form, in_stock: v })} />
                 <Label>In stock</Label>
@@ -188,6 +227,7 @@ const Admin = () => {
                   <th className="text-left p-3">Category</th>
                   <th className="text-left p-3">Price</th>
                   <th className="text-left p-3">Sizes</th>
+                  <th className="text-left p-3">Colors</th>
                   <th className="text-left p-3">Stock</th>
                   <th className="text-right p-3">Actions</th>
                 </tr>
@@ -212,6 +252,7 @@ const Admin = () => {
                       </div>
                     </td>
                     <td className="p-3 text-xs tracking-wider">{p.sizes?.length ? p.sizes.join(", ") : "—"}</td>
+                    <td className="p-3 text-xs">{((p as any).colors as string[] | undefined)?.length ? ((p as any).colors as string[]).join(", ") : "—"}</td>
                     <td className="p-3">{p.in_stock ? "Yes" : "No"}</td>
                     <td className="p-3 text-right">
                       <Button variant="ghost" size="icon" onClick={() => openEdit(p)}><Pencil className="w-4 h-4" /></Button>
