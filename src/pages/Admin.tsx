@@ -21,8 +21,10 @@ type Size = Database["public"]["Enums"]["product_size"];
 
 const SIZES: Size[] = ["S", "M", "L", "XL", "XXL", "XXXL"];
 
+const defaultSubcategory = (cat: Category) => SUBCATEGORIES[cat]?.[0] ?? "";
+
 const empty = {
-  name: "", description: "", price: "", original_price: "", category: "men" as Category, image_url: "", in_stock: true, sizes: [] as Size[], colors: [] as string[], colorInput: "", subcategory: "",
+  name: "", description: "", price: "", original_price: "", category: "men" as Category, image_url: "", in_stock: true, sizes: [] as Size[], colors: [] as string[], colorInput: "", subcategory: defaultSubcategory("men"),
 };
 
 const calcDiscount = (price: number, original?: number | null) => {
