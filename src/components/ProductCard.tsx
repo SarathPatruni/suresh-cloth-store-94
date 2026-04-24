@@ -1,5 +1,5 @@
 import { ArrowDown } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Tables } from "@/integrations/supabase/types";
 
 type Product = Tables<"products">;
@@ -8,10 +8,17 @@ const formatPrice = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 const formatPlain = (n: number) => n.toLocaleString("en-IN");
 
 const ProductCard = ({ product }: { product: Product }) => {
+  const navigate = useNavigate();
   const price = Number(product.price);
   const original = product.original_price != null ? Number(product.original_price) : null;
   const hasDiscount = original !== null && original > price;
   const discountPct = hasDiscount ? Math.round(((original! - price) / original!) * 100) : 0;
+
+  const handleSizeClick = (e: React.MouseEvent, size: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigate(`/product/${product.id}?size=${encodeURIComponent(size)}`);
+  };
 
   return (
     <Link to={`/product/${product.id}`} className="group cursor-pointer block">
