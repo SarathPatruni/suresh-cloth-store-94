@@ -151,7 +151,12 @@ const Admin = () => {
               </div>
               <div>
                 <Label>Category</Label>
-                <Select value={form.category} onValueChange={(v: Category) => setForm({ ...form, category: v })}>
+                <Select
+                  value={form.category}
+                  onValueChange={(v: Category) =>
+                    setForm({ ...form, category: v, subcategory: defaultSubcategory(v) })
+                  }
+                >
                   <SelectTrigger className="mt-1.5"><SelectValue /></SelectTrigger>
                   <SelectContent>
                     <SelectItem value="men">Men</SelectItem>
@@ -161,19 +166,20 @@ const Admin = () => {
                 </Select>
               </div>
               <div>
-                <Label>Subcategory <span className="text-muted-foreground text-xs">— optional</span></Label>
-                <Input
-                  list="subcategory-options"
+                <Label>Subcategory <span className="text-destructive">*</span></Label>
+                <Select
                   value={form.subcategory}
-                  onChange={(e) => setForm({ ...form, subcategory: e.target.value })}
-                  className="mt-1.5"
-                  placeholder="e.g. Shirts, T-Shirts, Jeans"
-                />
-                <datalist id="subcategory-options">
-                  {SUBCATEGORIES[form.category]?.map((s) => (
-                    <option key={s} value={s} />
-                  ))}
-                </datalist>
+                  onValueChange={(v) => setForm({ ...form, subcategory: v })}
+                >
+                  <SelectTrigger className="mt-1.5">
+                    <SelectValue placeholder="Select a subcategory" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {SUBCATEGORIES[form.category]?.map((s) => (
+                      <SelectItem key={s} value={s}>{s}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
               <div className="md:col-span-2">
                 <Label>Image URL</Label>
