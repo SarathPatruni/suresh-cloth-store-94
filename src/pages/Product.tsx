@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, Link, Navigate } from "react-router-dom";
+import { useParams, Link, Navigate, useSearchParams } from "react-router-dom";
 import { ArrowDown, ArrowLeft } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -12,6 +12,8 @@ const formatPlain = (n: number) => n.toLocaleString("en-IN");
 
 const Product = () => {
   const { id } = useParams<{ id: string }>();
+  const [searchParams] = useSearchParams();
+  const preselectedSize = searchParams.get("size");
   const [product, setProduct] = useState<Tables<"products"> | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
@@ -28,10 +30,15 @@ const Product = () => {
       .then(({ data }) => {
         if (!data) setNotFound(true);
         setProduct(data ?? null);
-        setSelectedSize(data?.sizes?.[0] ?? null);
+        const sizes = data?.sizes ?? [];
+        const initial =
+          preselectedSize && sizes.includes(preselectedSize as never)
+            ? preselectedSize
+            : sizes[0] ?? null;
+        setSelectedSize(initial);
         setLoading(false);
       });
-  }, [id]);
+  }, [id, preselectedSize]);
 
   if (notFound) return <Navigate to="/" replace />;
 

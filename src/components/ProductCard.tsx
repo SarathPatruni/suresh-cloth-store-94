@@ -1,5 +1,5 @@
 import { ArrowDown } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Tables } from "@/integrations/supabase/types";
 
 type Product = Tables<"products">;
@@ -8,10 +8,17 @@ const formatPrice = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 const formatPlain = (n: number) => n.toLocaleString("en-IN");
 
 const ProductCard = ({ product }: { product: Product }) => {
+  const navigate = useNavigate();
   const price = Number(product.price);
   const original = product.original_price != null ? Number(product.original_price) : null;
   const hasDiscount = original !== null && original > price;
   const discountPct = hasDiscount ? Math.round(((original! - price) / original!) * 100) : 0;
+
+  const handleSizeClick = (e: React.MouseEvent, size: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigate(`/product/${product.id}?size=${encodeURIComponent(size)}`);
+  };
 
   return (
     <Link to={`/product/${product.id}`} className="group cursor-pointer block">
@@ -50,6 +57,20 @@ const ProductCard = ({ product }: { product: Product }) => {
             <span className="text-base font-bold text-foreground">{formatPrice(price)}</span>
           )}
         </div>
+        {product.sizes && product.sizes.length > 0 && (
+          <div className="mt-2.5 flex flex-wrap gap-1.5">
+            {product.sizes.map((s) => (
+              <button
+                key={s}
+                type="button"
+                onClick={(e) => handleSizeClick(e, s)}
+                className="min-w-[2rem] h-7 px-2 border border-border text-[0.7rem] uppercase tracking-wider hover:border-foreground hover:bg-foreground hover:text-background transition-elegant"
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </Link>
   );
