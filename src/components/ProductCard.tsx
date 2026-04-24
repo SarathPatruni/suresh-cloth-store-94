@@ -1,4 +1,5 @@
 import { ArrowDown } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Tables } from "@/integrations/supabase/types";
 
 type Product = Tables<"products">;
@@ -13,7 +14,7 @@ const ProductCard = ({ product }: { product: Product }) => {
   const discountPct = hasDiscount ? Math.round(((original! - price) / original!) * 100) : 0;
 
   return (
-    <article className="group cursor-pointer">
+    <Link to={`/product/${product.id}`} className="group cursor-pointer block">
       <div className="aspect-[3/4] overflow-hidden bg-secondary relative">
         {product.image_url ? (
           <img
@@ -50,7 +51,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           )}
         </div>
       </div>
-    </article>
+    </Link>
   );
 };
 
