@@ -82,6 +82,9 @@ const Admin = () => {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!form.subcategory) {
+      return toast.error("Please select a subcategory");
+    }
     const payload = {
       name: form.name, description: form.description || null,
       price: Number(form.price),
@@ -90,7 +93,7 @@ const Admin = () => {
       image_url: form.image_url || null, in_stock: form.in_stock,
       sizes: form.sizes,
       colors: form.colors,
-      subcategory: form.subcategory.trim() || null,
+      subcategory: form.subcategory,
     } as any;
     const { error } = editing
       ? await supabase.from("products").update(payload).eq("id", editing.id)
