@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { Pencil, Plus, Trash2, X } from "lucide-react";
+import { SUBCATEGORIES } from "@/lib/subcategories";
 
 type Product = Tables<"products">;
 type Category = Database["public"]["Enums"]["product_category"];
@@ -21,7 +22,7 @@ type Size = Database["public"]["Enums"]["product_size"];
 const SIZES: Size[] = ["S", "M", "L", "XL", "XXL", "XXXL"];
 
 const empty = {
-  name: "", description: "", price: "", original_price: "", category: "men" as Category, image_url: "", in_stock: true, sizes: [] as Size[], colors: [] as string[], colorInput: "",
+  name: "", description: "", price: "", original_price: "", category: "men" as Category, image_url: "", in_stock: true, sizes: [] as Size[], colors: [] as string[], colorInput: "", subcategory: "",
 };
 
 const calcDiscount = (price: number, original?: number | null) => {
@@ -59,6 +60,7 @@ const Admin = () => {
       sizes: (p.sizes ?? []) as Size[],
       colors: ((p as any).colors ?? []) as string[],
       colorInput: "",
+      subcategory: ((p as any).subcategory as string | null) ?? "",
     });
     setShowForm(true);
   };
@@ -86,6 +88,7 @@ const Admin = () => {
       image_url: form.image_url || null, in_stock: form.in_stock,
       sizes: form.sizes,
       colors: form.colors,
+      subcategory: form.subcategory.trim() || null,
     } as any;
     const { error } = editing
       ? await supabase.from("products").update(payload).eq("id", editing.id)
