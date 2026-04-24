@@ -20,6 +20,14 @@ const ProductCard = ({ product }: { product: Product }) => {
     navigate(`/product/${product.id}?size=${encodeURIComponent(size)}`);
   };
 
+  const handleColorClick = (e: React.MouseEvent, color: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigate(`/product/${product.id}?color=${encodeURIComponent(color)}`);
+  };
+
+  const colors = ((product as any).colors as string[] | undefined) ?? [];
+
   return (
     <Link to={`/product/${product.id}`} className="group cursor-pointer block">
       <div className="aspect-[3/4] overflow-hidden bg-secondary relative">
@@ -67,6 +75,20 @@ const ProductCard = ({ product }: { product: Product }) => {
                 className="min-w-[2rem] h-7 px-2 border border-border text-[0.7rem] uppercase tracking-wider hover:border-foreground hover:bg-foreground hover:text-background transition-elegant"
               >
                 {s}
+              </button>
+            ))}
+          </div>
+        )}
+        {colors.length > 0 && (
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            {colors.map((c) => (
+              <button
+                key={c}
+                type="button"
+                onClick={(e) => handleColorClick(e, c)}
+                className="h-7 px-2 border border-border text-[0.7rem] uppercase tracking-wider hover:border-foreground hover:bg-foreground hover:text-background transition-elegant"
+              >
+                {c}
               </button>
             ))}
           </div>

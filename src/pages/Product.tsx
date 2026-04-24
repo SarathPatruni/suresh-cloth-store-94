@@ -14,9 +14,11 @@ const Product = () => {
   const { id } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
   const preselectedSize = searchParams.get("size");
+  const preselectedColor = searchParams.get("color");
   const [product, setProduct] = useState<Tables<"products"> | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
@@ -36,9 +38,15 @@ const Product = () => {
             ? preselectedSize
             : sizes[0] ?? null;
         setSelectedSize(initial);
+        const colors = ((data as any)?.colors as string[] | undefined) ?? [];
+        const initialColor =
+          preselectedColor && colors.includes(preselectedColor)
+            ? preselectedColor
+            : colors[0] ?? null;
+        setSelectedColor(initialColor);
         setLoading(false);
       });
-  }, [id, preselectedSize]);
+  }, [id, preselectedSize, preselectedColor]);
 
   if (notFound) return <Navigate to="/" replace />;
 
@@ -126,6 +134,29 @@ const Product = () => {
                         }`}
                       >
                         {s}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {(((product as any).colors as string[] | undefined) ?? []).length > 0 && (
+                <div className="mt-6">
+                  <div className="text-[0.7rem] uppercase tracking-[0.3em] text-muted-foreground mb-3">
+                    Select color {selectedColor && <span className="ml-2 normal-case tracking-normal text-foreground">— {selectedColor}</span>}
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {(((product as any).colors as string[]) ?? []).map((c) => (
+                      <button
+                        key={c}
+                        onClick={() => setSelectedColor(c)}
+                        className={`h-11 px-4 border text-sm transition-elegant ${
+                          selectedColor === c
+                            ? "border-foreground bg-foreground text-background"
+                            : "border-border hover:border-foreground"
+                        }`}
+                      >
+                        {c}
                       </button>
                     ))}
                   </div>
