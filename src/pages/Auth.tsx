@@ -133,7 +133,7 @@ const Auth = () => {
           </div>
 
           {/* Form card */}
-          <div className="w-full max-w-md mx-auto lg:mx-0 lg:ml-auto">
+          <div className="w-full max-w-md mx-auto lg:mx-0 lg:ml-auto h-full flex flex-col justify-center lg:py-10">
             <div className="text-center lg:hidden mb-8">
               <span className="text-[0.7rem] uppercase tracking-[0.3em] text-accent">Welcome</span>
               <h1 className="font-display text-4xl mt-2">Suresh Cloth Store</h1>
