@@ -137,7 +137,7 @@ const Auth = () => {
               </p>
             </div>
 
-            <div className="border border-border bg-card/95 backdrop-blur p-7 md:p-8 shadow-elegant">
+            <div className="bg-card/80 backdrop-blur p-7 md:p-8 rounded-xl">
               <div className="hidden lg:block mb-6">
                 <span className="text-[0.7rem] uppercase tracking-[0.3em] text-accent">Account</span>
                 <h2 className="font-display text-3xl mt-1.5">Glad you're here</h2>
