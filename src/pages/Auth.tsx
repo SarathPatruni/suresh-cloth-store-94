@@ -194,6 +194,9 @@ const Auth = () => {
               </Link>
             </div>
           </div>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
       <Footer />
