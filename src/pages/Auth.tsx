@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Sparkles, Truck, ShieldCheck, Heart } from "lucide-react";
 
 const Auth = () => {
   const navigate = useNavigate();
