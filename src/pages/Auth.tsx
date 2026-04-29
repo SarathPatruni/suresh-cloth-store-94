@@ -99,9 +99,12 @@ const Auth = () => {
             </Tabs>
           </div>
 
-          <p className="text-xs text-muted-foreground text-center mt-6">
+          <div className="flex items-center justify-between mt-6 text-xs text-muted-foreground">
             <Link to="/" className="hover:text-foreground transition-elegant">← Back to store</Link>
-          </p>
+            <Link to="/admin/login" className="hover:text-accent transition-elegant uppercase tracking-[0.2em]">
+              Admin access
+            </Link>
+          </div>
         </div>
       </main>
       <Footer />
