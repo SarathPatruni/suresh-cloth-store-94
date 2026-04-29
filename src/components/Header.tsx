@@ -3,7 +3,7 @@ import { useEffect, useState, FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/hooks/useAuth";
-import { LogOut, Search, ShieldCheck, User as UserIcon } from "lucide-react";
+import { Lock, LogOut, Search, ShieldCheck, User as UserIcon } from "lucide-react";
 
 const Header = () => {
   const { user, isAdmin, signOut } = useAuth();
