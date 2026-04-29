@@ -92,16 +92,18 @@ const Header = () => {
       </div>
 
       {/* Mobile search */}
-      <form onSubmit={handleSearch} className="md:hidden container pb-3 relative">
-        <Search className="w-4 h-4 absolute left-6 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
-        <Input
-          type="search"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search products…"
-          aria-label="Search products"
-          className="pl-9 h-10 rounded-full bg-secondary/60 border-transparent"
-        />
+      <form onSubmit={handleSearch} className="md:hidden container pb-3">
+        <div className="relative">
+          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+          <Input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search products…"
+            aria-label="Search products"
+            className="pl-10 h-10 rounded-full bg-secondary/60 border-transparent"
+          />
+        </div>
       </form>
 
       {/* Mobile sub-nav */}
