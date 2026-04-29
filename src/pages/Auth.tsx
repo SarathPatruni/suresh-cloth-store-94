@@ -58,7 +58,7 @@ const Auth = () => {
           </div>
 
           <div className="border border-border bg-card p-7 shadow-soft">
-            <Tabs defaultValue="signin">
+            <Tabs defaultValue={defaultTab}>
               <TabsList className="grid w-full grid-cols-2 mb-6">
                 <TabsTrigger value="signin">Sign in</TabsTrigger>
                 <TabsTrigger value="signup">Create account</TabsTrigger>
