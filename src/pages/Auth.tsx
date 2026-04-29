@@ -50,58 +50,60 @@ const Auth = () => {
       <Header />
       <main className="flex-1 container py-12 md:py-16">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center max-w-6xl mx-auto">
-          {/* Welcome panel */}
-          <div className="hidden lg:block relative">
-            <div className="absolute -top-6 -left-6 w-24 h-24 rounded-full bg-accent/10 blur-2xl" aria-hidden />
-            <div className="absolute bottom-0 right-10 w-32 h-32 rounded-full bg-gold/10 blur-3xl" aria-hidden />
+          {/* Welcome panel — dark glowing hero card */}
+          <div className="hidden lg:block">
+            <div className="relative overflow-hidden rounded-2xl bg-[hsl(25_25%_10%)] text-[hsl(38_30%_94%)] p-10 xl:p-12 min-h-[640px] shadow-elegant">
+              {/* Glow gradient */}
+              <div
+                aria-hidden
+                className="absolute -top-32 left-1/2 -translate-x-1/2 w-[120%] h-[420px] rounded-full blur-3xl opacity-80"
+                style={{ background: "radial-gradient(closest-side, hsl(14 75% 55% / 0.55), hsl(38 60% 50% / 0.25), transparent 70%)" }}
+              />
+              <div
+                aria-hidden
+                className="absolute bottom-0 right-0 w-[280px] h-[280px] rounded-full blur-3xl opacity-50"
+                style={{ background: "radial-gradient(closest-side, hsl(38 60% 55% / 0.4), transparent 70%)" }}
+              />
 
-            <div className="relative">
-              <span className="inline-flex items-center gap-2 text-[0.7rem] uppercase tracking-[0.3em] text-accent">
-                <Sparkles className="w-3.5 h-3.5" /> A warm welcome
-              </span>
-              <h1 className="font-display text-5xl xl:text-6xl mt-4 leading-[1.05] text-balance">
-                Welcome to <span className="italic text-accent">Suresh</span> Cloth Store
-              </h1>
-              <p className="text-muted-foreground mt-5 text-base leading-relaxed max-w-md">
-                Step into timeless style. Enjoy your shopping with us — curated fabrics,
-                heritage craftsmanship, and pieces made to feel uniquely yours.
-              </p>
+              {/* Subtle grid sparkle */}
+              <div aria-hidden className="absolute inset-0 opacity-[0.06] [background-image:radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] [background-size:24px_24px]" />
 
-              <div className="mt-8 h-px w-16 bg-accent/60" aria-hidden />
+              <div className="relative">
+                <div className="flex items-center gap-2 text-[hsl(38_30%_94%)]">
+                  <Sparkles className="w-5 h-5 text-[hsl(14_75%_65%)]" />
+                  <span className="font-display text-2xl tracking-tight">Suresh<span className="text-[hsl(14_75%_65%)]">.</span></span>
+                </div>
 
-              <ul className="mt-8 space-y-4 text-sm">
-                <li className="flex items-start gap-3">
-                  <span className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-full bg-accent/10 text-accent shrink-0">
-                    <Heart className="w-4 h-4" />
-                  </span>
-                  <div>
-                    <p className="font-medium text-foreground">Handpicked collections</p>
-                    <p className="text-muted-foreground">Men, Women & Kids — chosen with love.</p>
-                  </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-full bg-accent/10 text-accent shrink-0">
-                    <Truck className="w-4 h-4" />
-                  </span>
-                  <div>
-                    <p className="font-medium text-foreground">Smooth, swift delivery</p>
-                    <p className="text-muted-foreground">Right to your doorstep, beautifully packed.</p>
-                  </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-full bg-accent/10 text-accent shrink-0">
-                    <ShieldCheck className="w-4 h-4" />
-                  </span>
-                  <div>
-                    <p className="font-medium text-foreground">Safe & secure checkout</p>
-                    <p className="text-muted-foreground">Your details stay protected, always.</p>
-                  </div>
-                </li>
-              </ul>
+                <h2 className="font-display text-4xl xl:text-5xl mt-10 leading-[1.05] text-balance">
+                  Welcome to <span className="italic">Suresh Cloth Store</span>
+                </h2>
+                <p className="mt-4 text-sm xl:text-base text-[hsl(38_30%_94%/0.7)] max-w-sm">
+                  Enjoy your shopping with us — a few easy steps to begin your journey.
+                </p>
 
-              <p className="mt-10 font-display italic text-2xl text-foreground/80">
-                “Wear the story, feel the craft.”
-              </p>
+                {/* Steps timeline */}
+                <ol className="relative mt-12 space-y-4 pl-6 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-px before:bg-[hsl(38_30%_94%/0.18)]">
+                  {[
+                    { icon: "🛍️", title: "Sign up your account", desc: "Quick & easy — just an email and password." },
+                    { icon: "✨", title: "Explore the collection", desc: "Men, Women & Kids — handpicked with love." },
+                    { icon: "🎁", title: "Shop with positive vibes", desc: "Smooth checkout, secure & beautifully packed." },
+                  ].map((s, i) => (
+                    <li key={i} className="relative">
+                      <span className="absolute -left-6 top-4 w-3 h-3 rounded-full bg-[hsl(14_75%_60%)] ring-4 ring-[hsl(25_25%_10%)]" />
+                      <div className="rounded-lg bg-[hsl(38_30%_94%/0.06)] border border-[hsl(38_30%_94%/0.1)] backdrop-blur-sm px-4 py-3.5">
+                        <p className="font-medium flex items-center gap-2 text-[hsl(38_30%_94%)]">
+                          <span aria-hidden>{s.icon}</span> {s.title}
+                        </p>
+                        <p className="text-xs mt-1 text-[hsl(38_30%_94%/0.65)]">{s.desc}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+
+                <p className="mt-10 font-display italic text-xl text-[hsl(38_30%_94%/0.8)]">
+                  “Wear the story, feel the craft.”
+                </p>
+              </div>
             </div>
           </div>
 
