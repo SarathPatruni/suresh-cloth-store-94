@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Sparkles } from "lucide-react";
 
@@ -53,7 +52,7 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-hero-gradient">
-      <Header />
+      
       <main className="flex-1 container py-12 md:py-16">
         {/* Outer glowing wrapper */}
         <div className="relative max-w-6xl mx-auto">
