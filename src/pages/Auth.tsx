@@ -49,10 +49,30 @@ const Auth = () => {
     <div className="min-h-screen flex flex-col bg-hero-gradient">
       <Header />
       <main className="flex-1 container py-12 md:py-16">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center max-w-6xl mx-auto">
-          {/* Welcome panel — dark glowing hero card */}
-          <div className="hidden lg:block">
-            <div className="relative overflow-hidden rounded-2xl bg-[hsl(25_25%_10%)] text-[hsl(38_30%_94%)] p-10 xl:p-12 min-h-[640px] shadow-elegant">
+        {/* Outer glowing wrapper */}
+        <div className="relative max-w-6xl mx-auto">
+          {/* Glow halo */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -inset-1 rounded-[1.75rem] blur-2xl opacity-70"
+            style={{
+              background:
+                "linear-gradient(135deg, hsl(14 75% 55% / 0.55), hsl(38 60% 55% / 0.35) 50%, hsl(14 75% 55% / 0.55))",
+            }}
+          />
+          {/* Gradient border via padding trick */}
+          <div
+            className="relative rounded-[1.5rem] p-[1.5px]"
+            style={{
+              background:
+                "linear-gradient(135deg, hsl(14 75% 60% / 0.9), hsl(38 60% 60% / 0.5) 45%, hsl(14 75% 60% / 0.9))",
+            }}
+          >
+            <div className="rounded-[calc(1.5rem-1.5px)] bg-background/95 backdrop-blur-md p-4 md:p-6">
+              <div className="grid lg:grid-cols-2 gap-4 lg:gap-5 items-stretch">
+                {/* Welcome panel — dark glowing hero card */}
+                <div className="hidden lg:block">
+                  <div className="relative overflow-hidden rounded-2xl bg-[hsl(25_25%_10%)] text-[hsl(38_30%_94%)] p-10 xl:p-12 h-full min-h-[640px] shadow-elegant">
               {/* Glow gradient */}
               <div
                 aria-hidden
