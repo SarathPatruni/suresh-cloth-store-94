@@ -83,7 +83,7 @@ const Header = () => {
                   <Link to="/auth"><Lock className="w-4 h-4 sm:mr-1.5" /> <span className="hidden sm:inline">Login</span></Link>
                 </Button>
                 <Button asChild size="sm" variant="default" className="h-9 rounded-none px-5">
-                  <Link to="/auth?tab=signup">Register</Link>
+                  <Link to="/auth?tab=signup">Join Us</Link>
                 </Button>
               </>
             )}
