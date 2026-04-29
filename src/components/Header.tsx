@@ -3,7 +3,7 @@ import { useEffect, useState, FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/hooks/useAuth";
-import { LogOut, Search, ShieldCheck, User as UserIcon } from "lucide-react";
+import { Lock, LogOut, Search, ShieldCheck, User as UserIcon } from "lucide-react";
 
 const Header = () => {
   const { user, isAdmin, signOut } = useAuth();
@@ -33,26 +33,19 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/85 backdrop-blur-md">
-      <div className="container grid h-20 grid-cols-2 items-center gap-6 lg:grid-cols-[auto_1fr_auto]">
-        {/* Logo */}
-        <Link to="/" className="group shrink-0 flex flex-col justify-center">
-          <div className="font-display text-2xl md:text-[1.7rem] leading-none tracking-tight">
-            Suresh<span className="text-accent">.</span>
-          </div>
-          <div className="text-[0.6rem] uppercase tracking-[0.32em] text-muted-foreground mt-1">
-            Cloth Store
-          </div>
-        </Link>
+      <div className="container flex h-20 items-center gap-6">
+        {/* Left: logo + search */}
+        <div className="flex items-center gap-5 flex-1 min-w-0">
+          <Link to="/" className="shrink-0 flex flex-col justify-center">
+            <div className="font-display text-2xl md:text-[1.7rem] leading-none tracking-tight">
+              Suresh<span className="text-accent">.</span>
+            </div>
+            <div className="text-[0.6rem] uppercase tracking-[0.32em] text-muted-foreground mt-1">
+              Cloth Store
+            </div>
+          </Link>
 
-        {/* Center: nav + search */}
-        <div className="hidden lg:flex items-center justify-center gap-6 min-w-0">
-          <nav className="flex items-center gap-7 shrink-0">
-            <NavLink to="/shop/men" className={navClass}>Men</NavLink>
-            <NavLink to="/shop/women" className={navClass}>Women</NavLink>
-            <NavLink to="/shop/kids" className={navClass}>Kids</NavLink>
-          </nav>
-          <span className="h-5 w-px bg-border/80" aria-hidden />
-          <form onSubmit={handleSearch} className="relative flex-1 max-w-md min-w-0">
+          <form onSubmit={handleSearch} className="hidden md:block relative flex-1 max-w-md min-w-0">
             <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
             <Input
               type="search"
@@ -65,27 +58,36 @@ const Header = () => {
           </form>
         </div>
 
-        {/* Right: actions */}
-        <div className="flex items-center justify-end gap-1.5 shrink-0">
-          {isAdmin ? (
-            <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex h-9">
-              <Link to="/admin"><ShieldCheck className="w-4 h-4 mr-1.5" /> Admin</Link>
-            </Button>
-          ) : (
-            <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex h-9 text-muted-foreground hover:text-foreground">
-              <Link to="/admin/login"><ShieldCheck className="w-4 h-4 mr-1.5" /> Admin</Link>
-            </Button>
-          )}
-          {user ? (
-            <Button variant="ghost" size="sm" onClick={handleSignOut} className="h-9">
-              <LogOut className="w-4 h-4 sm:mr-1.5" />
-              <span className="hidden sm:inline">Sign out</span>
-            </Button>
-          ) : (
-            <Button asChild size="sm" variant="default" className="h-9">
-              <Link to="/auth"><UserIcon className="w-4 h-4 sm:mr-1.5" /> <span className="hidden sm:inline">Sign in</span></Link>
-            </Button>
-          )}
+        {/* Right: nav + auth */}
+        <div className="flex items-center gap-7 shrink-0">
+          <nav className="hidden lg:flex items-center gap-7">
+            <NavLink to="/shop/men" className={navClass}>Men</NavLink>
+            <NavLink to="/shop/women" className={navClass}>Women</NavLink>
+            <NavLink to="/shop/kids" className={navClass}>Kids</NavLink>
+          </nav>
+
+          <div className="flex items-center gap-2">
+            {isAdmin && (
+              <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex h-9">
+                <Link to="/admin"><ShieldCheck className="w-4 h-4 mr-1.5" /> Admin</Link>
+              </Button>
+            )}
+            {user ? (
+              <Button variant="ghost" size="sm" onClick={handleSignOut} className="h-9">
+                <LogOut className="w-4 h-4 sm:mr-1.5" />
+                <span className="hidden sm:inline">Sign out</span>
+              </Button>
+            ) : (
+              <>
+                <Button asChild variant="ghost" size="sm" className="h-9">
+                  <Link to="/auth"><Lock className="w-4 h-4 sm:mr-1.5" /> <span className="hidden sm:inline">Login</span></Link>
+                </Button>
+                <Button asChild size="sm" variant="default" className="h-9 rounded-none px-5">
+                  <Link to="/auth?tab=signup">Register</Link>
+                </Button>
+              </>
+            )}
+          </div>
         </div>
       </div>
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
@@ -12,10 +12,12 @@ import Footer from "@/components/Footer";
 
 const Auth = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { user, loading: authLoading } = useAuth();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const defaultTab = searchParams.get("tab") === "signup" ? "signup" : "signin";
 
   useEffect(() => {
     if (!authLoading && user) navigate("/", { replace: true });
@@ -56,7 +58,7 @@ const Auth = () => {
           </div>
 
           <div className="border border-border bg-card p-7 shadow-soft">
-            <Tabs defaultValue="signin">
+            <Tabs defaultValue={defaultTab}>
               <TabsList className="grid w-full grid-cols-2 mb-6">
                 <TabsTrigger value="signin">Sign in</TabsTrigger>
                 <TabsTrigger value="signup">Create account</TabsTrigger>
@@ -97,9 +99,12 @@ const Auth = () => {
             </Tabs>
           </div>
 
-          <p className="text-xs text-muted-foreground text-center mt-6">
+          <div className="flex items-center justify-between mt-6 text-xs text-muted-foreground">
             <Link to="/" className="hover:text-foreground transition-elegant">← Back to store</Link>
-          </p>
+            <Link to="/admin/login" className="hover:text-accent transition-elegant uppercase tracking-[0.2em]">
+              Admin access
+            </Link>
+          </div>
         </div>
       </main>
       <Footer />
