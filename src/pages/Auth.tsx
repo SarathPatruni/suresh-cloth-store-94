@@ -29,8 +29,14 @@ const Auth = () => {
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
-    if (error) toast.error(error.message);
-    else { toast.success("Welcome back."); navigate("/"); }
+    if (error) {
+      const msg = error.message?.toLowerCase() ?? "";
+      if (msg.includes("invalid") || msg.includes("credentials") || msg.includes("not found")) {
+        toast.error("Create the account first, then login.");
+      } else {
+        toast.error(error.message);
+      }
+    } else { toast.success("Welcome back."); navigate("/"); }
   };
 
   const handleSignUp = async (e: React.FormEvent) => {
