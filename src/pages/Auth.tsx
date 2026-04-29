@@ -12,10 +12,12 @@ import Footer from "@/components/Footer";
 
 const Auth = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { user, loading: authLoading } = useAuth();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const defaultTab = searchParams.get("tab") === "signup" ? "signup" : "signin";
 
   useEffect(() => {
     if (!authLoading && user) navigate("/", { replace: true });
