@@ -39,7 +39,7 @@
     --input: 30 20% 86%;
     --ring: 14 55% 48%;
 
-    --radius: 0.25rem;
+    --radius: 0.9rem;
 
     /* Tokens */
     --gradient-hero: linear-gradient(135deg, hsl(38 40% 94%) 0%, hsl(35 30% 88%) 100%);
@@ -88,6 +88,25 @@
     font-feature-settings: "ss01", "cv11";
   }
   h1, h2, h3, h4, .font-display { font-family: 'Cormorant Garamond', serif; letter-spacing: -0.01em; }
+
+  /* Global aesthetic: soften every corner — images, inputs, buttons, cards, badges */
+  img,
+  video,
+  picture,
+  svg.illustration,
+  input:not([type="checkbox"]):not([type="radio"]),
+  textarea,
+  select,
+  button,
+  .card,
+  [class*="border"]:not(hr):not(table):not(thead):not(tbody):not(tr):not(td):not(th) {
+    border-radius: var(--radius);
+  }
+
+  /* Force-round common rect utilities to keep things consistent */
+  .rounded-none { border-radius: calc(var(--radius) - 0.35rem) !important; }
+  .rounded-sm   { border-radius: calc(var(--radius) - 0.35rem) !important; }
+  .rounded-md   { border-radius: calc(var(--radius) - 0.15rem) !important; }
 }
 
 @layer utilities {
