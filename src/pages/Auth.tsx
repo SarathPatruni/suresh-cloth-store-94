@@ -52,7 +52,7 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-hero-gradient">
-      <Header />
+      
       <main className="flex-1 container py-12 md:py-16">
         {/* Outer glowing wrapper */}
         <div className="relative max-w-6xl mx-auto">
