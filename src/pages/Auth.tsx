@@ -231,6 +231,26 @@ const Auth = () => {
                   </form>
                 </TabsContent>
               </Tabs>
+
+              <div className="relative my-5">
+                <div className="absolute inset-0 flex items-center"><span className="w-full border-t border-border/60" /></div>
+                <span className="relative flex justify-center text-[0.65rem] uppercase tracking-[0.3em] text-muted-foreground bg-card/80 px-3">
+                  or continue with
+                </span>
+              </div>
+
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleGoogle}
+                disabled={loading}
+                className="w-full h-11 gap-2.5"
+              >
+                <svg viewBox="0 0 24 24" className="w-4 h-4" aria-hidden>
+                  <path fill="#EA4335" d="M12 10.2v3.96h5.52c-.24 1.44-1.68 4.2-5.52 4.2-3.32 0-6.04-2.76-6.04-6.16S8.68 6.04 12 6.04c1.88 0 3.16.8 3.88 1.48l2.64-2.56C16.92 3.44 14.68 2.5 12 2.5 6.76 2.5 2.5 6.76 2.5 12S6.76 21.5 12 21.5c6.92 0 9.5-4.84 9.5-7.32 0-.5-.04-.88-.12-1.28H12z"/>
+                </svg>
+                Continue with Google
+              </Button>
             </div>
 
             <div className="flex items-center justify-between mt-6 text-xs text-muted-foreground">
