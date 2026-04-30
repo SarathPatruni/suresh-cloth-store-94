@@ -15,7 +15,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Lock, LogOut, Search, ShieldCheck, User as UserIcon } from "lucide-react";
 
 const Header = () => {
-  const { user, isAdmin, signOut } = useAuth();
+  const { user, isAdmin, avatarUrl: headerAvatarUrl, signOut } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get("q") ?? "");
@@ -88,8 +88,7 @@ const Header = () => {
                   (meta.full_name as string) ||
                   (meta.name as string) ||
                   (user.email ?? "");
-                const avatarUrl =
-                  (meta.avatar_url as string) || (meta.picture as string) || "";
+                const avatarUrl = headerAvatarUrl;
                 const initial = (name || "U").trim().charAt(0).toUpperCase();
                 return (
                   <Link
