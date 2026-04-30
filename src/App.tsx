@@ -9,6 +9,7 @@ import Shop from "./pages/Shop.tsx";
 import Product from "./pages/Product.tsx";
 import Search from "./pages/Search.tsx";
 import Auth from "./pages/Auth.tsx";
+import Profile from "./pages/Profile.tsx";
 import Admin from "./pages/Admin.tsx";
 import AdminLogin from "./pages/AdminLogin.tsx";
 import NotFound from "./pages/NotFound.tsx";
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/product/:id" element={<Product />} />
             <Route path="/search" element={<Search />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="*" element={<NotFound />} />
