@@ -53,8 +53,25 @@ const Auth = () => {
   return (
     <div className="min-h-screen flex flex-col bg-hero-gradient">
       
-      <main className="flex-1 container py-12 md:py-16">
-        {/* Outer glowing wrapper */}
+      <main className="flex-1 container py-8 md:py-10">
+        {/* Top brand bar */}
+        <div className="max-w-6xl mx-auto mb-6 md:mb-8 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-2.5 group" aria-label="Suresh Cloth Store — Home">
+            <span className="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-[hsl(25_25%_10%)] shadow-elegant ring-1 ring-accent/30 transition-elegant group-hover:ring-accent/60">
+              <Sparkles className="w-5 h-5 text-accent" />
+              <span aria-hidden className="absolute -inset-1 rounded-full bg-accent/20 blur-md opacity-60 group-hover:opacity-90 transition-elegant" />
+            </span>
+            <span className="flex flex-col leading-none">
+              <span className="font-display text-xl md:text-2xl tracking-tight">
+                Suresh<span className="text-accent">.</span>
+              </span>
+              <span className="text-[0.6rem] uppercase tracking-[0.32em] text-muted-foreground mt-1">
+                Cloth Store
+              </span>
+            </span>
+          </Link>
+        </div>
+
         <div className="relative max-w-6xl mx-auto">
           {/* Glow halo */}
           <div
