@@ -92,20 +92,19 @@ const Header = () => {
                   (meta.avatar_url as string) || (meta.picture as string) || "";
                 const initial = (name || "U").trim().charAt(0).toUpperCase();
                 return (
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <button
-                        aria-label="Account menu"
-                        className="rounded-full ring-1 ring-border/60 hover:ring-accent/60 transition-elegant focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                      >
-                        <Avatar className="h-9 w-9">
-                          {avatarUrl ? <AvatarImage src={avatarUrl} alt={name} /> : null}
-                          <AvatarFallback className="bg-accent/15 text-accent font-medium">
-                            {initial}
-                          </AvatarFallback>
-                        </Avatar>
-                      </button>
-                    </DropdownMenuTrigger>
+                  <Link
+                    to="/profile"
+                    aria-label="View profile"
+                    className="rounded-full ring-1 ring-border/60 hover:ring-accent/60 transition-elegant focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  >
+                    <Avatar className="h-9 w-9">
+                      {avatarUrl ? <AvatarImage src={avatarUrl} alt={name} /> : null}
+                      <AvatarFallback className="bg-accent/15 text-accent font-medium">
+                        {initial}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Link>
+                );
                     <DropdownMenuContent align="end" className="w-56">
                       <DropdownMenuLabel className="truncate">
                         {name || "Signed in"}
