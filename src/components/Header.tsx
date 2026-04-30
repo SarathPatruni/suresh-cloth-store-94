@@ -88,8 +88,7 @@ const Header = () => {
                   (meta.full_name as string) ||
                   (meta.name as string) ||
                   (user.email ?? "");
-                const avatarUrl =
-                  (meta.avatar_url as string) || (meta.picture as string) || "";
+                const avatarUrl = headerAvatarUrl;
                 const initial = (name || "U").trim().charAt(0).toUpperCase();
                 return (
                   <Link
