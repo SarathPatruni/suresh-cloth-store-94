@@ -2,6 +2,15 @@ import { Link, NavLink, useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState, FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
 import { Lock, LogOut, Search, ShieldCheck, User as UserIcon } from "lucide-react";
 
@@ -73,16 +82,51 @@ const Header = () => {
               </Button>
             )}
             {user ? (
-              <Button variant="ghost" size="sm" onClick={handleSignOut} className="h-9">
-                <LogOut className="w-4 h-4 sm:mr-1.5" />
-                <span className="hidden sm:inline">Sign out</span>
-              </Button>
+              (() => {
+                const meta = (user.user_metadata ?? {}) as Record<string, unknown>;
+                const name =
+                  (meta.full_name as string) ||
+                  (meta.name as string) ||
+                  (user.email ?? "");
+                const avatarUrl =
+                  (meta.avatar_url as string) || (meta.picture as string) || "";
+                const initial = (name || "U").trim().charAt(0).toUpperCase();
+                return (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button
+                        aria-label="Account menu"
+                        className="rounded-full ring-1 ring-border/60 hover:ring-accent/60 transition-elegant focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                      >
+                        <Avatar className="h-9 w-9">
+                          {avatarUrl ? <AvatarImage src={avatarUrl} alt={name} /> : null}
+                          <AvatarFallback className="bg-accent/15 text-accent font-medium">
+                            {initial}
+                          </AvatarFallback>
+                        </Avatar>
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-56">
+                      <DropdownMenuLabel className="truncate">
+                        {name || "Signed in"}
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      {isAdmin && (
+                        <DropdownMenuItem asChild>
+                          <Link to="/admin"><ShieldCheck className="w-4 h-4 mr-2" /> Admin</Link>
+                        </DropdownMenuItem>
+                      )}
+                      <DropdownMenuItem onClick={handleSignOut}>
+                        <LogOut className="w-4 h-4 mr-2" /> Sign out
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                );
+              })()
             ) : (
-              <>
-                <Button asChild size="sm" variant="default" className="h-9 rounded-none px-5">
-                  <Link to="/auth?tab=signup">Join Us</Link>
-                </Button>
-              </>
+              <Button asChild size="sm" variant="default" className="h-9 rounded-none px-5">
+                <Link to="/auth?tab=signup">Join Us</Link>
+              </Button>
             )}
           </div>
         </div>
