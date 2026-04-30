@@ -15,7 +15,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Lock, LogOut, Search, ShieldCheck, User as UserIcon } from "lucide-react";
 
 const Header = () => {
-  const { user, isAdmin, signOut } = useAuth();
+  const { user, isAdmin, avatarUrl: headerAvatarUrl, signOut } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get("q") ?? "");
