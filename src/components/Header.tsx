@@ -105,22 +105,6 @@ const Header = () => {
                     </Avatar>
                   </Link>
                 );
-                    <DropdownMenuContent align="end" className="w-56">
-                      <DropdownMenuLabel className="truncate">
-                        {name || "Signed in"}
-                      </DropdownMenuLabel>
-                      <DropdownMenuSeparator />
-                      {isAdmin && (
-                        <DropdownMenuItem asChild>
-                          <Link to="/admin"><ShieldCheck className="w-4 h-4 mr-2" /> Admin</Link>
-                        </DropdownMenuItem>
-                      )}
-                      <DropdownMenuItem onClick={handleSignOut}>
-                        <LogOut className="w-4 h-4 mr-2" /> Sign out
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                );
               })()
             ) : (
               <Button asChild size="sm" variant="default" className="h-9 rounded-none px-5">
