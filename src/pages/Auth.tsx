@@ -220,7 +220,7 @@ const Auth = () => {
           </div>
         </div>
       </main>
-      <Footer />
+      
     </div>
   );
 };
