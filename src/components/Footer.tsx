@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => (
   <footer className="border-t border-border/60 mt-24">
     <div className="container py-14 grid gap-10 md:grid-cols-4">
@@ -10,7 +12,9 @@ const Footer = () => (
       <div>
         <h4 className="text-xs uppercase tracking-[0.2em] mb-4 text-foreground">Shop</h4>
         <ul className="space-y-2 text-sm text-muted-foreground">
-          <li>Men</li><li>Women</li><li>Kids</li>
+          <li><Link to="/shop/men" className="hover:text-accent transition-elegant">Men</Link></li>
+          <li><Link to="/shop/women" className="hover:text-accent transition-elegant">Women</Link></li>
+          <li><Link to="/shop/kids" className="hover:text-accent transition-elegant">Kids</Link></li>
         </ul>
       </div>
       <div>
