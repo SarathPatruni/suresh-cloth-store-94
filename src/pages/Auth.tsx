@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { Sparkles } from "lucide-react";
+import { Sparkles, ArrowLeft } from "lucide-react";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -54,7 +54,7 @@ const Auth = () => {
       
       <main className="flex-1 container py-8 md:py-10">
         {/* Top brand bar */}
-        <div className="max-w-6xl mx-auto mb-6 md:mb-8 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto mb-6 md:mb-8 flex items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-2.5 group" aria-label="Suresh Cloth Store — Home">
             <span className="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-[hsl(25_25%_10%)] shadow-elegant ring-1 ring-accent/30 transition-elegant group-hover:ring-accent/60">
               <Sparkles className="w-5 h-5 text-accent" />
