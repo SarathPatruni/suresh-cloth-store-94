@@ -50,6 +50,21 @@ const Auth = () => {
     else { toast.success("Account created. You're signed in."); navigate("/"); }
   };
 
+  const handleGoogle = async () => {
+    setLoading(true);
+    const result = await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: window.location.origin,
+    });
+    if (result.error) {
+      setLoading(false);
+      toast.error(result.error.message ?? "Google sign-in failed");
+      return;
+    }
+    if (result.redirected) return;
+    toast.success("Signed in with Google.");
+    navigate("/");
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-hero-gradient">
       
