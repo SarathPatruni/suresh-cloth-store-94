@@ -17,6 +17,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 const Header = () => {
   const { user, isAdmin, avatarUrl: headerAvatarUrl, signOut } = useAuth();
+  const { lang, toggle } = useLanguage();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get("q") ?? "");
