@@ -78,6 +78,17 @@ const Header = () => {
           </nav>
 
           <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={toggle}
+              data-no-translate
+              aria-label="Toggle language"
+              title={lang === "en" ? "Switch to Telugu" : "Switch to English"}
+              className="inline-flex items-center gap-1.5 h-9 px-2.5 rounded-full border border-border/60 text-xs font-medium uppercase tracking-wider hover:bg-accent hover:text-accent-foreground transition-elegant"
+            >
+              <Languages className="w-4 h-4" />
+              <span>{lang === "en" ? "తె" : "EN"}</span>
+            </button>
             {isAdmin && (
               <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex h-9">
                 <Link to="/admin"><ShieldCheck className="w-4 h-4 mr-1.5" /> Admin</Link>
