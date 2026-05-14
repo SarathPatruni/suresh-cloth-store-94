@@ -19,9 +19,26 @@ const Footer = () => (
       </div>
       <div>
         <h4 className="text-xs uppercase tracking-[0.2em] mb-4 text-foreground">Visit us</h4>
-        <p className="text-sm text-muted-foreground leading-relaxed">
+        <p className="text-sm text-muted-foreground leading-relaxed mb-3">
           Main Bazaar Road<br />Open Mon — Sat, 10am — 9pm
         </p>
+        <a
+          href="https://www.google.com/maps?q=18.480279,83.112672"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block overflow-hidden rounded-md border border-border/60 hover:border-accent transition-elegant"
+          aria-label="Open Suresh Cloth Store location in Google Maps"
+        >
+          <iframe
+            title="Suresh Cloth Store location"
+            src="https://www.google.com/maps?q=18.480279,83.112672&z=16&output=embed"
+            width="100%"
+            height="140"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="block w-full pointer-events-none"
+          />
+        </a>
       </div>
     </div>
     <div className="border-t border-border/60">
