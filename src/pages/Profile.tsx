@@ -185,9 +185,6 @@ const Profile = () => {
                     <Trash2 className="w-4 h-4" /> Remove photo
                   </Button>
                 )}
-                <p className="text-[0.7rem] text-muted-foreground mt-2">
-                  Tap the camera to use your camera or choose a file · PNG, JPG, WEBP · up to 5 MB
-                </p>
               </div>
 
               <div className="mt-8 space-y-3">
