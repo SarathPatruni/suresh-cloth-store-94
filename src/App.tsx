@@ -24,17 +24,19 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AuthProvider>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/shop/:category" element={<Shop />} />
-            <Route path="/product/:id" element={<Product />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <LanguageProvider>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/shop/:category" element={<Shop />} />
+              <Route path="/product/:id" element={<Product />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </LanguageProvider>
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
