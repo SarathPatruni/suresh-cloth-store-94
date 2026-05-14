@@ -173,33 +173,20 @@ const Profile = () => {
                   Your profile
                 </p>
 
-                <div className="flex items-center gap-2 mt-5">
+                {hasCustom && (
                   <Button
                     type="button"
-                    variant="outline"
+                    variant="ghost"
                     size="sm"
-                    onClick={handlePick}
+                    onClick={handleRemove}
                     disabled={uploading}
-                    className="gap-2"
+                    className="mt-4 gap-2 text-muted-foreground hover:text-destructive"
                   >
-                    <Camera className="w-4 h-4" />
-                    {hasCustom ? "Change photo" : "Upload photo"}
+                    <Trash2 className="w-4 h-4" /> Remove photo
                   </Button>
-                  {hasCustom && (
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={handleRemove}
-                      disabled={uploading}
-                      className="gap-2 text-muted-foreground hover:text-destructive"
-                    >
-                      <Trash2 className="w-4 h-4" /> Remove
-                    </Button>
-                  )}
-                </div>
+                )}
                 <p className="text-[0.7rem] text-muted-foreground mt-2">
-                  PNG, JPG or WEBP · up to 5 MB
+                  Tap the camera to use your camera or choose a file · PNG, JPG, WEBP · up to 5 MB
                 </p>
               </div>
 
