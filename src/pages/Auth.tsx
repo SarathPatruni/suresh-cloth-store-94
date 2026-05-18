@@ -8,7 +8,6 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { Sparkles, ArrowLeft } from "lucide-react";
-import { lovable } from "@/integrations/lovable";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -51,18 +50,44 @@ const Auth = () => {
   };
 
   const handleGoogle = async () => {
+    const redirectTo = `${window.location.origin}/auth`;
+    console.log("[OAuth] Initiating Google sign-in, redirectTo:", redirectTo);
+
     setLoading(true);
-    const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
-    });
-    if (result.error) {
+
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo,
+          queryParams: {
+            access_type: "offline",   // Request a refresh token from Google
+            prompt: "consent",        // Always show consent screen to avoid stale sessions
+          },
+        },
+      });
+
+      if (error) {
+        console.error("[OAuth] Supabase signInWithOAuth error:", error);
+        setLoading(false);
+        toast.error(error.message || "Google sign-in failed. Please try again.");
+        return;
+      }
+
+      // If the SDK returned a redirect URL, the browser will navigate away.
+      // If for some reason it didn't, reset loading so the UI isn't stuck.
+      if (!data?.url) {
+        console.warn("[OAuth] No redirect URL returned from Supabase");
+        setLoading(false);
+      } else {
+        console.log("[OAuth] Redirecting to:", data.url);
+      }
+    } catch (err) {
+      // Catch unexpected runtime errors (network failures, etc.)
+      console.error("[OAuth] Unexpected error during Google sign-in:", err);
       setLoading(false);
-      toast.error(result.error.message ?? "Google sign-in failed");
-      return;
+      toast.error("Something went wrong. Please check your connection and try again.");
     }
-    if (result.redirected) return;
-    toast.success("Signed in with Google.");
-    navigate("/");
   };
 
   return (

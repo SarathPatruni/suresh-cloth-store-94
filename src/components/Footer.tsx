@@ -20,7 +20,12 @@ const Footer = () => (
       <div>
         <h4 className="text-xs uppercase tracking-[0.2em] mb-4 text-foreground">Visit us</h4>
         <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-          Main Bazaar Road<br />Open Mon — Sat, 10am — 9pm
+          <br />Phone: <a href="tel:+919999999999" className="hover:text-accent transition-elegant">+91 9581633110</a>
+          <br />
+          Pedda Bazaar,
+          <br />Pachipenta,
+          <br />Parvatipuram, AP 535592
+          <br />Open Sun — Sat, 10am — 9pm
         </p>
         <a
           href="https://www.google.com/maps?q=18.480279,83.112672"
