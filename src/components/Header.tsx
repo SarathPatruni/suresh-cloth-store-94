@@ -12,8 +12,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
-import { Languages, Lock, LogOut, Search, ShieldCheck, User as UserIcon } from "lucide-react";
+import { Languages, Lock, LogOut, Search, ShieldCheck, ShoppingBag, User as UserIcon } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useCart } from "@/contexts/CartContext";
 
 const Header = () => {
   const { user, isAdmin, avatarUrl: headerAvatarUrl, signOut } = useAuth();
