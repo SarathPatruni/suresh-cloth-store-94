@@ -173,6 +173,18 @@ const Product = () => {
                   variant="outline"
                   className="rounded-none px-8 h-12"
                   disabled={!product.in_stock}
+                  onClick={() => {
+                    if (!product) return;
+                    addItem({
+                      id: product.id,
+                      name: product.name,
+                      price: Number(product.price),
+                      image_url: product.image_url,
+                      size: selectedSize,
+                      color: selectedColor,
+                    });
+                    toast.success("Added to bag");
+                  }}
                 >
                   {product.in_stock ? "Add to bag" : "Sold out"}
                 </Button>
@@ -180,6 +192,18 @@ const Product = () => {
                   size="lg"
                   className="rounded-none px-8 h-12"
                   disabled={!product.in_stock}
+                  onClick={() => {
+                    if (!product) return;
+                    addItem({
+                      id: product.id,
+                      name: product.name,
+                      price: Number(product.price),
+                      image_url: product.image_url,
+                      size: selectedSize,
+                      color: selectedColor,
+                    });
+                    navigate("/checkout");
+                  }}
                 >
                   Buy now
                 </Button>
