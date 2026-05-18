@@ -19,6 +19,7 @@ import { useCart } from "@/contexts/CartContext";
 const Header = () => {
   const { user, isAdmin, avatarUrl: headerAvatarUrl, signOut } = useAuth();
   const { lang, toggle } = useLanguage();
+  const { count: cartCount } = useCart();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get("q") ?? "");
