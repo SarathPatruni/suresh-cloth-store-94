@@ -13,6 +13,8 @@ const formatPrice = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 const formatPlain = (n: number) => n.toLocaleString("en-IN");
 
 const Product = () => {
+  const navigate = useNavigate();
+  const { addItem } = useCart();
   const { id } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
   const preselectedSize = searchParams.get("size");
