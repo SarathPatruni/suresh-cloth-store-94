@@ -76,14 +76,14 @@ const Checkout = () => {
     setSubmitting(true);
     const { data, error } = await supabase
       .from("orders")
-      .insert({
+      .insert([{
         user_id: user.id,
         items: items as unknown as never,
         ...parsed.data,
         subtotal,
         total,
         status: "pending",
-      })
+      }])
       .select("id")
       .single();
     setSubmitting(false);
