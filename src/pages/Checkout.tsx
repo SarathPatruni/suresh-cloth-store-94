@@ -74,12 +74,20 @@ const Checkout = () => {
     }
     if (!user) return;
     setSubmitting(true);
+    const d = parsed.data;
     const { data, error } = await supabase
       .from("orders")
       .insert([{
         user_id: user.id,
         items: items as unknown as never,
-        ...parsed.data,
+        full_name: d.full_name,
+        phone: d.phone,
+        address_line1: d.address_line1,
+        address_line2: d.address_line2 ?? null,
+        city: d.city,
+        state: d.state,
+        postal_code: d.postal_code,
+        country: d.country,
         subtotal,
         total,
         status: "pending",
