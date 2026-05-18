@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { useParams, Link, Navigate, useSearchParams } from "react-router-dom";
+import { useParams, Link, Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import { ArrowDown, ArrowLeft } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { Tables } from "@/integrations/supabase/types";
+import { useCart } from "@/contexts/CartContext";
+import { toast } from "sonner";
 
 const formatPrice = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 const formatPlain = (n: number) => n.toLocaleString("en-IN");
