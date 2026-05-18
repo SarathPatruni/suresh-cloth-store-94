@@ -12,12 +12,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
-import { Languages, Lock, LogOut, Search, ShieldCheck, User as UserIcon } from "lucide-react";
+import { Languages, Lock, LogOut, Search, ShieldCheck, ShoppingBag, User as UserIcon } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useCart } from "@/contexts/CartContext";
 
 const Header = () => {
   const { user, isAdmin, avatarUrl: headerAvatarUrl, signOut } = useAuth();
   const { lang, toggle } = useLanguage();
+  const { count: cartCount } = useCart();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get("q") ?? "");
@@ -94,6 +96,21 @@ const Header = () => {
                 <Link to="/admin"><ShieldCheck className="w-4 h-4 mr-1.5" /> Admin</Link>
               </Button>
             )}
+            <Link
+              to="/checkout"
+              aria-label="View cart"
+              className="relative inline-flex items-center justify-center h-9 w-9 rounded-full border border-border/60 hover:bg-accent hover:text-accent-foreground transition-elegant"
+            >
+              <ShoppingBag className="w-4 h-4" />
+              {cartCount > 0 && (
+                <span
+                  data-no-translate
+                  className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-accent text-accent-foreground text-[10px] font-bold inline-flex items-center justify-center"
+                >
+                  {cartCount > 99 ? "99+" : cartCount}
+                </span>
+              )}
+            </Link>
             {user ? (
               (() => {
                 const meta = (user.user_metadata ?? {}) as Record<string, unknown>;

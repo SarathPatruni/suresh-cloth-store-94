@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
-import { useParams, Link, Navigate, useSearchParams } from "react-router-dom";
+import { useParams, Link, Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import { ArrowDown, ArrowLeft } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { Tables } from "@/integrations/supabase/types";
+import { useCart } from "@/contexts/CartContext";
+import { toast } from "sonner";
 
 const formatPrice = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 const formatPlain = (n: number) => n.toLocaleString("en-IN");
 
 const Product = () => {
+  const navigate = useNavigate();
+  const { addItem } = useCart();
   const { id } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
   const preselectedSize = searchParams.get("size");
@@ -169,6 +173,18 @@ const Product = () => {
                   variant="outline"
                   className="rounded-none px-8 h-12"
                   disabled={!product.in_stock}
+                  onClick={() => {
+                    if (!product) return;
+                    addItem({
+                      id: product.id,
+                      name: product.name,
+                      price: Number(product.price),
+                      image_url: product.image_url,
+                      size: selectedSize,
+                      color: selectedColor,
+                    });
+                    toast.success("Added to bag");
+                  }}
                 >
                   {product.in_stock ? "Add to bag" : "Sold out"}
                 </Button>
@@ -176,6 +192,18 @@ const Product = () => {
                   size="lg"
                   className="rounded-none px-8 h-12"
                   disabled={!product.in_stock}
+                  onClick={() => {
+                    if (!product) return;
+                    addItem({
+                      id: product.id,
+                      name: product.name,
+                      price: Number(product.price),
+                      image_url: product.image_url,
+                      size: selectedSize,
+                      color: selectedColor,
+                    });
+                    navigate("/checkout");
+                  }}
                 >
                   Buy now
                 </Button>
