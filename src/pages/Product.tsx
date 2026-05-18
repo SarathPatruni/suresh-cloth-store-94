@@ -166,10 +166,18 @@ const Product = () => {
               <div className="mt-8 flex flex-wrap gap-3">
                 <Button
                   size="lg"
+                  variant="outline"
                   className="rounded-none px-8 h-12"
                   disabled={!product.in_stock}
                 >
                   {product.in_stock ? "Add to bag" : "Sold out"}
+                </Button>
+                <Button
+                  size="lg"
+                  className="rounded-none px-8 h-12"
+                  disabled={!product.in_stock}
+                >
+                  Buy now
                 </Button>
               </div>
 
