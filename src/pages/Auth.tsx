@@ -29,24 +29,37 @@ const Auth = () => {
     setLoading(false);
     if (error) {
       const msg = error.message?.toLowerCase() ?? "";
-      if (msg.includes("invalid") || msg.includes("credentials") || msg.includes("not found")) {
-        toast.error("Create the account first, then login.");
+      if (msg.includes("email not confirmed")) {
+        toast.error("Please confirm your email first. Check your inbox for the confirmation link.");
+      } else if (msg.includes("invalid") || msg.includes("credentials") || msg.includes("not found")) {
+        toast.error("Invalid email or password. Don't have an account? Create one first.");
       } else {
         toast.error(error.message);
       }
-    } else { toast.success("Welcome back."); navigate("/"); }
+    } else {
+      toast.success("Welcome back!");
+      navigate("/");
+    }
   };
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email, password,
-      options: { emailRedirectTo: `${window.location.origin}/` },
+      options: { emailRedirectTo: `${window.location.origin}/auth` },
     });
     setLoading(false);
-    if (error) toast.error(error.message);
-    else { toast.success("Account created. You're signed in."); navigate("/"); }
+    if (error) {
+      toast.error(error.message);
+    } else if (data.session) {
+      // Email confirmation is disabled — user is signed in immediately
+      toast.success("Account created! Welcome.");
+      navigate("/");
+    } else {
+      // Email confirmation is required — user must verify email first
+      toast.success("Account created! Check your email for a confirmation link, then sign in.");
+    }
   };
 
   const handleGoogle = async () => {
