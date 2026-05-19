@@ -14,13 +14,47 @@ const Auth = () => {
   const [searchParams] = useSearchParams();
   const { user, loading: authLoading } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [oauthLoading, setOauthLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const defaultTab = searchParams.get("tab") === "signup" ? "signup" : "signin";
 
+  // Handle OAuth PKCE callback — when redirected back with ?code=
   useEffect(() => {
-    if (!authLoading && user) navigate("/", { replace: true });
-  }, [user, authLoading, navigate]);
+    const code = searchParams.get("code");
+    if (code) {
+      setOauthLoading(true);
+      console.log("[OAuth Callback] Exchanging code for session...");
+      supabase.auth.exchangeCodeForSession(code).then(({ data, error }) => {
+        if (error) {
+          console.error("[OAuth Callback] Code exchange failed:", error);
+          toast.error("Google sign-in failed. Please try again.");
+          setOauthLoading(false);
+        } else {
+          console.log("[OAuth Callback] Session established for:", data.user?.email);
+          toast.success("Welcome!");
+          navigate("/", { replace: true });
+        }
+      });
+    }
+  }, []);
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (!authLoading && user && !oauthLoading) navigate("/", { replace: true });
+  }, [user, authLoading, oauthLoading, navigate]);
+
+  // Show loading screen during OAuth code exchange
+  if (oauthLoading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-hero-gradient">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-10 h-10 border-[3px] border-accent/30 border-t-accent rounded-full animate-spin" />
+          <p className="text-muted-foreground text-sm tracking-wide">Signing you in...</p>
+        </div>
+      </div>
+    );
+  }
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -205,7 +239,7 @@ const Auth = () => {
                 </ol>
 
                 <p className="mt-10 font-display italic text-xl text-[hsl(38_30%_94%/0.8)]">
-                  “Wear the story, feel the craft.”
+                  \u201cWear the story, feel the craft.\u201d
                 </p>
               </div>
             </div>
@@ -247,7 +281,7 @@ const Auth = () => {
                       <Input id="si-password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} className="mt-1.5" />
                     </div>
                     <Button type="submit" className="w-full rounded-none h-11" disabled={loading}>
-                      {loading ? "Signing in…" : "Sign in"}
+                      {loading ? "Signing in\u2026" : "Sign in"}
                     </Button>
                   </form>
                 </TabsContent>
@@ -264,7 +298,7 @@ const Auth = () => {
                       <p className="text-xs text-muted-foreground mt-1.5">At least 6 characters.</p>
                     </div>
                     <Button type="submit" className="w-full rounded-none h-11" disabled={loading}>
-                      {loading ? "Creating…" : "Create account"}
+                      {loading ? "Creating\u2026" : "Create account"}
                     </Button>
                   </form>
                 </TabsContent>
@@ -292,7 +326,7 @@ const Auth = () => {
             </div>
 
             <div className="flex items-center justify-between mt-6 text-xs text-muted-foreground">
-              <Link to="/" className="hover:text-foreground transition-elegant">← Back to store</Link>
+              <Link to="/" className="hover:text-foreground transition-elegant">&larr; Back to store</Link>
               <Link to="/admin/login" className="hover:text-accent transition-elegant uppercase tracking-[0.2em]">
                 Admin access
               </Link>
