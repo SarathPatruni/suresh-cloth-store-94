@@ -14,6 +14,7 @@ import Auth from "./pages/Auth.tsx";
 import Profile from "./pages/Profile.tsx";
 import Checkout from "./pages/Checkout.tsx";
 import Admin from "./pages/Admin.tsx";
+import AdminOrders from "./pages/AdminOrders.tsx";
 import AdminLogin from "./pages/AdminLogin.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
@@ -38,6 +39,7 @@ const App = () => (
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/admin/login" element={<AdminLogin />} />
                 <Route path="/admin" element={<Admin />} />
+                <Route path="/admin/orders" element={<AdminOrders />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </CartProvider>

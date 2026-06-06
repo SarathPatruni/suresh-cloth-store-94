@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useAuth } from "@/hooks/useAuth";
@@ -12,7 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
-import { Pencil, Plus, Trash2, Upload, X, Loader2 } from "lucide-react";
+import { Pencil, Plus, Trash2, Upload, X, Loader2, Package } from "lucide-react";
 import { SUBCATEGORIES } from "@/lib/subcategories";
 
 type Product = Tables<"products">;
@@ -149,7 +149,12 @@ const Admin = () => {
             <h1 className="font-display text-4xl md:text-5xl mt-2">Manage Catalog</h1>
             <p className="text-muted-foreground text-sm mt-1">{products.length} products</p>
           </div>
-          <Button onClick={openNew} className="rounded-none"><Plus className="w-4 h-4 mr-1.5" /> Add product</Button>
+          <div className="flex gap-2">
+            <Button asChild variant="outline" className="rounded-none">
+              <Link to="/admin/orders"><Package className="w-4 h-4 mr-1.5" /> Orders</Link>
+            </Button>
+            <Button onClick={openNew} className="rounded-none"><Plus className="w-4 h-4 mr-1.5" /> Add product</Button>
+          </div>
         </div>
 
         {showForm && (
